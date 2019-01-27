@@ -1,5 +1,7 @@
 class ArticlesController < ApplicationController
     
+    before_action :must_be_authenticated, only: [:new, :create, :destroy, :edit, :update]
+
     include ArticlesHelper
 
     def index
@@ -38,5 +40,13 @@ class ArticlesController < ApplicationController
         @article.update(article_params)
         flash.notice = "Article '#{@article.title}' Updated."
         redirect_to article_path(@article)
+    end
+
+    def must_be_authenticated
+        unless current_user
+            redirect_to root_path
+            flash.notice = "You cant do that unless you're logged in"
+            return false
+        end
     end
 end

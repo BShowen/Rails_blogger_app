@@ -8,5 +8,8 @@
   <% end %>
 </ul>
 
-<%= link_to 'Create a New Article' , new_article_path, class: 'new_article' %>
+<% if current_user %>
+  <%= link_to 'Create a New Article' , new_article_path, class: 'new_article' %>
+<% end %>
+
 <%= link_to 'See All Tags' , tags_path, class: 'article_title'   %>

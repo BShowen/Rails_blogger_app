@@ -1,5 +1,8 @@
 class CommentsController < ApplicationController
 
+    
+    before_action :must_be_authenticated, except: [:create]
+
     include CommentsHelper
 
     def new 
@@ -35,5 +38,12 @@ class CommentsController < ApplicationController
         redirect_to article_path(params[:article_id])
     end
 
+    def must_be_authenticated
+        unless current_user
+            redirect_to root_path
+          flash.notice = "You cant do that unless you're logged in"
+          return false
+        end
+    end
     
 end
